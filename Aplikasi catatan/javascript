@@ -1,0 +1,47 @@
+document.addEventListener('DOMContentLoaded', () => {
+  const noteInput = document.getElementById('note-input');
+  const addNoteButton = document.getElementById('add-note');
+  const notesList = document.getElementById('notes-list');
+
+  // Function to add a new note
+  function addNote() {
+    const noteText = noteInput.value.trim();
+    if (noteText === '') return;
+
+    // Create a new note item
+    const noteItem = document.createElement('li');
+    noteItem.classList.add('note-item');
+
+    // Add note text
+    const noteContent = document.createElement('span');
+    noteContent.textContent = noteText;
+
+    // Add delete button
+    const deleteButton = document.createElement('button');
+    deleteButton.classList.add('delete-btn');
+    deleteButton.innerHTML = '<i class="fas fa-trash-alt"></i>';
+    deleteButton.addEventListener('click', () => {
+      notesList.removeChild(noteItem);
+    });
+
+    // Append elements to the note item
+    noteItem.appendChild(noteContent);
+    noteItem.appendChild(deleteButton);
+
+    // Add the note item to the list
+    notesList.appendChild(noteItem);
+
+    // Clear the input field
+    noteInput.value = '';
+  }
+
+  // Event listener for adding a note
+  addNoteButton.addEventListener('click', addNote);
+
+  // Allow pressing "Enter" to add a note
+  noteInput.addEventListener('keypress', (event) => {
+    if (event.key === 'Enter') {
+      addNote();
+    }
+  });
+});
